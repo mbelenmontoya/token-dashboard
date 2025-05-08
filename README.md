@@ -1,12 +1,113 @@
-# React + Vite
+# Token Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal React admin dashboard for the Design Token Manager API, built with Vite and React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Prerequisites](#prerequisites)
+* [Setup](#setup)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+  * [Clone & Install](#clone--install)
+  * [Run the Dashboard](#run-the-dashboard)
+* [Environment Configuration](#environment-configuration)
+* [Usage](#usage)
+* [Scripts](#scripts)
+* [Contributing](#contributing)
+* [License](#license)
+
+---
+
+## Features
+
+* **Login** via JWT to secure API calls
+* **List** design tokens
+* **Create** new tokens
+* **Delete** existing tokens
+* **Persistent** session using `localStorage`
+
+---
+
+## Tech Stack
+
+* **Vite** for fast bundling
+* **React** (with Hooks) for UI
+* **Fetch API** for HTTP requests
+* **whatwg-fetch** polyfill for compatibility
+
+---
+
+## Prerequisites
+
+* Node.js v18+ and npm
+* Running Design Token Manager API at `http://localhost:4000`
+
+---
+
+## Setup
+
+### Clone & Install
+
+```bash
+git clone https://github.com/<your-org>/token-dashboard.git
+cd token-dashboard
+npm install
+```
+
+### Run the Dashboard
+
+```bash
+npm run dev
+```
+
+The app will open in your browser at `http://localhost:5173`.
+
+---
+
+## Environment Configuration
+
+By default, the dashboard points to the API at `http://localhost:4000`. To change the API URL, edit `src/main.jsx` or define a Vite environment variable in a `.env` file:
+
+```dotenv
+VITE_API_URL=https://api.yourdomain.com
+```
+
+Then update fetch calls in your components to use `import.meta.env.VITE_API_URL`.
+
+---
+
+## Usage
+
+1. Open the dashboard in your browser.
+2. Log in with your admin credentials (e.g., `admin` / `Admin#123`).
+3. Browse existing tokens, add new ones, or delete as needed.
+4. Click **Logout** to end your session.
+
+---
+
+## Scripts
+
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start Vite dev server    |
+| `npm run build`   | Build production assets  |
+| `npm run preview` | Preview production build |
+
+---
+
+## Contributing
+
+1. Fork this repo
+2. Create a feature branch (`git checkout -b feat/your-feature`)
+3. Commit your changes (`git commit -m 'feat: add feature'`)
+4. Push to the branch (`git push origin feat/your-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+[MIT](LICENSE)
