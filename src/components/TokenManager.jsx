@@ -7,7 +7,7 @@ export default function TokenManager({ token }) {
   });
 
   const fetchTokens = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tokens`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}api/tokens`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
@@ -16,7 +16,7 @@ export default function TokenManager({ token }) {
 
   const createToken = async (e) => {
     e.preventDefault();
-    await fetch(`${import.meta.env.VITE_API_URL}/api/tokens`, {
+    await fetch(`${import.meta.env.VITE_API_URL}api/tokens`, {
       method: 'POST',
       headers: {
         'Content-Type':  'application/json',
@@ -29,7 +29,7 @@ export default function TokenManager({ token }) {
   };
 
   const deleteToken = async (id) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/api/tokens/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}api/tokens/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });
