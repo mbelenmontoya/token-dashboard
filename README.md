@@ -43,7 +43,7 @@ A minimal React admin dashboard for the Design Token Manager API, built with Vit
 ## Prerequisites
 
 * Node.js v18+ and npm
-* Running Design Token Manager API at `https://design-token-manager-api.onrender.com/`
+* Running Design Token Manager API at `http://localhost:4000`
 
 ---
 
@@ -69,7 +69,7 @@ The app will open in your browser at `http://localhost:5173`.
 
 ## Environment Configuration
 
-By default, the dashboard points to the API at `https://design-token-manager-api.onrender.com/`. To change the API URL, edit `src/main.jsx` or define a Vite environment variable in a `.env` file:
+By default, the dashboard points to the API at `http://localhost:4000`. To change the API URL, edit `src/main.jsx` or define a Vite environment variable in a `.env` file:
 
 ```dotenv
 VITE_API_URL=https://api.yourdomain.com
