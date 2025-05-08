@@ -7,7 +7,7 @@ export default function TokenManager({ token }) {
   });
 
   const fetchTokens = async () => {
-    const res = await fetch('http://localhost:4000/api/tokens', {
+    const res = await fetch('https://design-token-manager-api.onrender.com/api/tokens', {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
@@ -16,7 +16,7 @@ export default function TokenManager({ token }) {
 
   const createToken = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:4000/api/tokens', {
+    await fetch('https://design-token-manager-api.onrender.com/api/tokens', {
       method: 'POST',
       headers: {
         'Content-Type':  'application/json',
@@ -29,7 +29,7 @@ export default function TokenManager({ token }) {
   };
 
   const deleteToken = async (id) => {
-    await fetch(`http://localhost:4000/api/tokens/${id}`, {
+    await fetch(`https://design-token-manager-api.onrender.com/api/tokens/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });
