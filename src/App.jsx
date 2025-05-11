@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Flex, Button, Heading } from '@chakra-ui/react';
-import {RiMailLine } from "react-icons/ri"
+import { LuLogOut } from "react-icons/lu"
 import LoginForm from './components/LoginForm';
 import TokenManager from './components/TokenManager';
 import './index.css'
@@ -37,21 +37,21 @@ function App() {
         px={6}
         py={4}
         boxShadow="sm"
-        bg="white"
-        _dark={{ bg: 'gray.700' }}
       >
         <Heading size="md">Design Token Manager</Heading>
 
-        {jwt && 
-          <Button 
-            colorPalette="teal" 
-            variant="outline" 
-            onClick={handleLogout}>
-              <RiMailLine />
-              Logout
-              </Button>
-        }
-        <ColorModeButton />
+        <Flex gap={2}>
+          <ColorModeButton />
+
+          {jwt && 
+            <Button 
+              colorPalette="teal" 
+              onClick={handleLogout}>
+                <LuLogOut />
+                Logout
+                </Button>
+          }
+        </Flex>
       </Flex>
 
       {/* Main content */}
