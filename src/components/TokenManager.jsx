@@ -33,10 +33,10 @@ export default function TokenManager({ token }) {
   const [form, setForm]     = useState({
     name: '', value: '', category: 'color', description: ''
   });
-  const [setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState('');
   const [categories, setCategories] = useState([]);
-  const [setEditingToken] = useState(null);
+  const [editingToken, setEditingToken] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const tokensPerPage = 10; // Number of tokens to show per page
 
@@ -54,7 +54,6 @@ export default function TokenManager({ token }) {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
-      console.log('Fetched tokens:', data);
       setTokens(data.tokens);
     } catch (err) {
       console.error('Fetch tokens error:', err);
@@ -210,14 +209,22 @@ export default function TokenManager({ token }) {
     drawer.close('a');
   };
 
-  const handleSubmit = async (e, formData = form, editingId = editingId) => {
+  const handleSubmit = async (e, formData = form, editingIdParam = editingId) => {
     e.preventDefault();
     setMessage('');
     try {
-      const url = editingId
-        ? `${API_BASE}/api/tokens/${editingId}`
+      const url = editingIdParam
+        ? `${API_BASE}/api/tokens/${editingIdParam}`
         : `${API_BASE}/api/tokens`;
-      const method = editingId ? 'PUT' : 'POST';
+      const method = editingIdParam ? 'PUT' : 'POST';
+      
+      console.log('Submitting token data:', {
+        url,
+        method,
+        formData,
+        editingIdParam
+      });
+
       const res = await fetch(url, {
         method,
         headers: {
@@ -226,16 +233,29 @@ export default function TokenManager({ token }) {
         },
         body: JSON.stringify(formData)
       });
-      if (!res.ok) throw new Error(`Error ${method}: ${res.status}`);
-      setMessage(editingId ? 'Token updated!' : 'Token added!');
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null);
+        console.error('Server error response:', {
+          status: res.status,
+          statusText: res.statusText,
+          errorData
+        });
+        throw new Error(`Error ${method}: ${res.status} - ${errorData?.message || res.statusText}`);
+      }
+
+      const responseData = await res.json();
+      console.log('Server response:', responseData);
+
+      setMessage(editingIdParam ? 'Token updated!' : 'Token added!');
       setEditingId(null);
       setEditingToken(null);
       setForm({ name: '', value: '', category: 'color', description: '' });
       fetchTokens();
       drawer.close('a');
     } catch (err) {
-      console.error(err);
-      setMessage('Operation failed. See console.');
+      console.error('Token operation failed:', err);
+      setMessage(`Operation failed: ${err.message}`);
     }
   };
 
@@ -290,7 +310,6 @@ export default function TokenManager({ token }) {
       setMessage('Token deleted!');
       fetchTokens();
     } catch (err) {
-      console.error('Delete error:', err);
       setMessage('Delete failed.');
     }
   };
@@ -326,11 +345,6 @@ export default function TokenManager({ token }) {
   const startIndex = (currentPage - 1) * tokensPerPage;
   const endIndex = startIndex + tokensPerPage;
   const currentTokens = filteredTokens.slice(startIndex, endIndex);
-
-  console.log('Total tokens:', tokens.length); // Debug log
-  console.log('Filtered tokens:', filteredTokens.length); // Debug log
-  console.log('Current page tokens:', currentTokens.length); // Debug log
-  console.log('Total pages:', totalPages); // Debug log
 
   // Reset to first page when filters change
   useEffect(() => {
